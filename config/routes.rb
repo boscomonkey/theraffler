@@ -1,4 +1,7 @@
 Theraffler::Application.routes.draw do
+  resources :meetup_events
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

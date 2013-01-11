@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Identifier:</b>
+  <%= @meetup_event.identifier %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @meetup_event.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_meetup_event_path(@meetup_event) %> |
+<%= link_to 'Back', meetup_events_path %>
