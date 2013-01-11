@@ -3,19 +3,21 @@
 <table>
   <tr>
     <th>Identifier</th>
-    <th>Description</th>
+    <th>URL</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @meetup_events.each do |meetup_event| %>
+<%
+   @meetup_events.each do |meetup_event|
+     url = meetup_event.to_url
+   %>
   <tr>
     <td><%= meetup_event.identifier %></td>
-    <td><%= meetup_event.description %></td>
-    <td><%= link_to 'Show', meetup_event %></td>
+    <td><%= link_to url, url %></td>
+    <td><%= link_to 'Raffle', meetup_event %></td>
     <td><%= link_to 'Edit', edit_meetup_event_path(meetup_event) %></td>
-    <td><%= link_to 'Destroy', meetup_event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

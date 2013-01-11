@@ -1,3 +1,7 @@
 class MeetupEvent < ActiveRecord::Base
-  attr_accessible :description, :identifier
+  attr_accessible :identifier
+
+  def to_url
+    "http://www.sfruby.info/events/#{self.identifier}"
+  end
 end

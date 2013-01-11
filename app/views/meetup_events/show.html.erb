@@ -1,15 +1,50 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Event Name:</b>
+  <%= @event_name %>
+</p>
+
+<p>
   <b>Identifier:</b>
   <%= @meetup_event.identifier %>
 </p>
 
 <p>
-  <b>Description:</b>
-  <%= @meetup_event.description %>
+  <b>URL:</b>
+  <%=
+     url = @meetup_event.to_url
+     link_to url, url
+     %>
 </p>
 
+<p>
+  <table>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Profile</th>
+    </tr>
+    <% @rsvps.each do |rsvp| %>
+    <tr>
+      <td><%=
+             foto = rsvp["member_photo"]
+             image_tag(
+               foto ? rsvp["member_photo"]["thumb_link"] : "/images/spacer.gif",
+               :height => 80)
+        %>
+      </td>
+      <td><%= rsvp["member"]["name"] %></td>
+      <td><%=
+             member_ident = rsvp["member"]["member_id"]
+             url = "http://www.sfruby.info/members/#{member_ident}/"
+             link_to url, url
+             %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</p>
 
 <%= link_to 'Edit', edit_meetup_event_path(@meetup_event) %> |
 <%= link_to 'Back', meetup_events_path %>

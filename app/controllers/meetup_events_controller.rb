@@ -1,3 +1,5 @@
+require 'rsvp_getter'
+
 class MeetupEventsController < ApplicationController
   # GET /meetup_events
   # GET /meetup_events.json
@@ -14,6 +16,16 @@ class MeetupEventsController < ApplicationController
   # GET /meetup_events/1.json
   def show
     @meetup_event = MeetupEvent.find(params[:id])
+
+    if api_key = ENV["MEETUP_API_KEY"]
+      getter = RsvpGetter.new api_key
+      response = getter.get @meetup_event.identifier
+      @rsvps = response.results.shuffle
+      @event_name = @rsvps.first["event"]["name"]
+    else
+      @rsvps = []
+      flash[:notice] = "ERROR: missing API key"
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -66,18 +78,6 @@ class MeetupEventsController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @meetup_event.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /meetup_events/1
-  # DELETE /meetup_events/1.json
-  def destroy
-    @meetup_event = MeetupEvent.find(params[:id])
-    @meetup_event.destroy
-
-    respond_to do |format|
-      format.html { redirect_to meetup_events_url }
-      format.json { head :no_content }
     end
   end
 end
