@@ -27,9 +27,12 @@ class MeetupEventsController < ApplicationController
       flash[:notice] = "ERROR: missing API key"
     end
 
+    event_with_rsvps = @meetup_event.attributes.merge("rsvps" => @rsvps)
+
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @meetup_event }
+      format.json { render json: event_with_rsvps }
+      format.xml { render xml: event_with_rsvps }
     end
   end
 
